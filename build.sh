@@ -22,4 +22,4 @@ cmake -B build -S . \
 cmake --build build -j"$(nproc)"
 
 echo
-echo "Built: build/pacmancedx.vpk ($(du -h build/pacmancedx.vpk | cut -f1))"
+echo "Built: build/pacmandash.vpk ($(du -h build/pacmandash.vpk | cut -f1))"
