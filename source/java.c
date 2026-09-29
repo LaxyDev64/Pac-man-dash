@@ -100,7 +100,7 @@ static int g_prof_current_cat = 0; /* 0=other, 1=png, 2=ogg */
  * FileHelper reimplementation
  *
  * Used for save data: openInputFile/openOutputFile/readFile/writeFile.
- * On Vita, files go to ux0:data/pacmancedx/files/
+ * On Vita, files go to ux0:data/pacmandash/files/
  */
 typedef struct {
     FILE *fp;
