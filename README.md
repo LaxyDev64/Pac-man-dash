@@ -1,4 +1,4 @@
-# PAC-MAN CE DX - PS Vita Port - V3 
+# PAC-MAN Dash! - PS Vita Port - alpha 
 
 ### → To install, go to **[pacmancedx.mcallbos.co](https://pacmancedx.mcallbos.co/)** ←
 
