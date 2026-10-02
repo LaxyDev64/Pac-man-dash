@@ -20,9 +20,9 @@
 #include <cstring>
 #include "utils/settings.h"
 
-#define CONFIG_DIR  "ux0:data/pacmancedx"
+#define CONFIG_DIR  "ux0:data/pacmandash"
 #ifdef DEBUG_SOLOADER
-#define LOG_FILE    "ux0:data/pacmancedx/configurator.log"
+#define LOG_FILE    "ux0:data/pacmandash/configurator.log"
 #endif
 
 enum OptionIndex {
@@ -62,6 +62,7 @@ enum OptionIndex {
     OPT_PRESET_ULTRA_PSP,
     OPT_PRESET_ULTRA_NATIVE_30,
     OPT_PRESET_CUSTOM,
+    OPT_INFINITE_STAMINA,
     OPTION_COUNT
 };
 
@@ -84,7 +85,7 @@ static const OptionIndex main_options[] = {
     OPT_OPEN_GAMEPLAY, OPT_OPEN_GRAPHICS, OPT_OPEN_SYSTEM
 };
 static const OptionIndex gameplay_options[] = {
-    OPT_GAMEPLAY_SPEED, OPT_PC_RULES, OPT_ALL_CONTENT
+    OPT_GAMEPLAY_SPEED, OPT_PC_RULES, OPT_ALL_CONTENT, OPT_INFINITE_STAMINA
 };
 static const OptionIndex graphics_options[] = {
     OPT_OPEN_PRESETS, OPT_OPEN_INTENSIVE, OPT_GHOST_EAT_OUTLINE, OPT_PACMAN_LIGHT,
@@ -277,7 +278,8 @@ static const char *option_hint() {
         if (preset >= 0 && preset < SETTING_PRESET_COUNT)
             return settings_preset_description(preset);
         switch (page.options[selected_row]) {
-            case OPT_OPEN_GAMEPLAY: return "Game speed, gameplay rules and content access.";
+            case OPT_OPEN_GAMEPLAY: return "Game speed, gameplay rules, content access and infinite stamina.";
+            case OPT_INFINITE_STAMINA: return "Stamina never runs out (the base game gives 10). Applies next launch.";
             case OPT_OPEN_GRAPHICS: return "Graphics presets, visual effects and intensive graphics options.";
             case OPT_FRAME_RATE: return "30 FPS reduces rendering load while keeping normal game speed.";
             case OPT_RESOLUTION: return "Lower resolutions look softer and reduce rendering load. Applies next launch.";
@@ -356,6 +358,7 @@ static void render_frame() {
         {"GRAPHICS",              ">"},
         {"INTENSIVE GRAPHICS",    ">"},
         {"SYSTEM",                ">"},
+        {"INFINITE STAMINA",      setting_infiniteStamina ? "ON" : "OFF"},
     };
     for (int preset = 0; preset < SETTING_PRESET_COUNT; ++preset)
         options[OPT_PRESET_ULTRA_LOW + preset] = {
@@ -548,6 +551,10 @@ static void cycle_option(int idx, int direction) {
             break;
         case OPT_ALL_CONTENT:
             setting_unlockAllContent = setting_unlockAllContent ? 0 : 1;
+            dirty = true;
+            break;
+        case OPT_INFINITE_STAMINA:
+            setting_infiniteStamina = setting_infiniteStamina ? 0 : 1;
             dirty = true;
             break;
         default:
